@@ -1,6 +1,11 @@
+const inputColumn = document.getElementById("inputColumn");
 const buttonImport = document.getElementById("importFile");
 const buttonClean = document.querySelector(".buttonClean");
+const dataResult = document.getElementById("dataResult");
 const buttonGenerate = document.querySelector(".buttonGenerate");
+const progressBar = document.querySelector(".progress-bar");
+
+const worker = new Worker("./readExcel.js");
 
 let datos = [
   ["Nombre", "Edad", "País"],
@@ -9,37 +14,62 @@ let datos = [
   ["Pedro", 40, "Argentina"],
 ];
 
-buttonClean.addEventListener("click", () => {
+const clean = () => {
   buttonImport.value = "";
   buttonGenerate.style.display = "none";
-});
+  dataResult.innerText = "";
+
+  progressBar.style.width = `0%`;
+};
+buttonClean.addEventListener("click", clean);
+buttonImport.addEventListener("click", clean);
 
 buttonImport.addEventListener("change", handleFileUpload);
 function handleFileUpload(e) {
+  progressBar.style.width = `0%`;
   if (e.target.files.length > 0) {
     const file = e.target.files[0];
     const reader = new FileReader();
+
     reader.onload = function (e) {
-      const nameColumn = "Nombre";
+      const nameColumn = inputColumn.value.toString();
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, { type: "array" });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      const array = rows
-        .filter((row) => row.length && row[0] !== nameColumn)
-        .map((row) => [row[0]]);
-      datos = [["Nombres"], ...array];
-      console.log(array); // ["Juan", "María", "Pedro"]
+      worker.postMessage({ rows, nameColumn });
+      dataResult.innerText = "Cargando...";
+      worker.onmessage = function (e) {
+        if (e.data.progress !== undefined) {
+          // Actualiza la barra de progreso si se ha enviado
+          progressBar.style.width = `${Math.round(e.data.progress * 100)}%`;
+        } else if (e.data.result !== undefined) {
+          // Usa el resultado si se ha enviado
+          if (e.data.result.length) {
+            datos = [[nameColumn], ...e.data.result];
+            dataResult.innerText = e.data.dataResult;
+            buttonGenerate.style.display = "initial";
+          } else {
+            // manejar el error
+            dataResult.innerText = "No se pudo procesar el archivo";
+            buttonGenerate.style.display = "none";
+          }
+        }
+      };
+      worker.onerror = function (e) {
+        // Maneja cualquier error del worker
+        dataResult.innerText = e.message;
+        buttonGenerate.style.display = "none";
+      };
     };
     reader.readAsArrayBuffer(file);
-    buttonGenerate.style.display = "initial";
   } else {
     buttonGenerate.style.display = "none";
+    dataResult.innerText = "";
   }
 }
 
 buttonGenerate.addEventListener("click", () => {
-  console.log(datos);
   // Crea un nuevo libro de Excel
   const libro = XLSX.utils.book_new();
 

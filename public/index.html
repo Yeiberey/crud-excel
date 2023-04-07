@@ -11,16 +11,28 @@
 </head>
 <body>
     <div class="index">
-        <div>
-            <input type="file" id="importFile">
-            <button class="buttonClean">
-                Clean
-            </button>
-
+        <div >
+<div style="display: flex; flex-direction: column; align-items: start; width: 100%;">
+    <label>Name column</label>
+    <input type="text" placeholder="Name column" value="Nombre completo" id="inputColumn">
+</div>
+<div>
+    <input type="file" id="importFile">
+    <button class="buttonClean">
+        Clean
+    </button>
+    
+</div>
+<div style="display: flex; flex-direction: column; align-items: start; width: 100%;">
+    <label style="text-align: start; margin: 10px 0; overflow-x: auto; max-height: 50vh; width: 100%;" id="dataResult"></label>
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+    <button class="buttonGenerate">
+        GENERATE FILE
+    </button>
+</div>
         </div>
-        <button class="buttonGenerate">
-            generar file
-        </button>
     </div>
     
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
