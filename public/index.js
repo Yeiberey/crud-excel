@@ -1,5 +1,6 @@
 const inputColumn = document.getElementById("inputColumn");
 const buttonImport = document.getElementById("importFile");
+buttonImport.disabled = true;
 const buttonClean = document.querySelector(".buttonClean");
 const dataResult = document.getElementById("dataResult");
 const buttonGenerate = document.querySelector(".buttonGenerate");
@@ -21,12 +22,16 @@ const clean = () => {
 
   progressBar.style.width = `0%`;
 };
+inputColumn.addEventListener("input", (e) => {
+  buttonImport.disabled = !e.target.value.length;
+});
 buttonClean.addEventListener("click", clean);
 buttonImport.addEventListener("click", clean);
 
 buttonImport.addEventListener("change", handleFileUpload);
 function handleFileUpload(e) {
   progressBar.style.width = `0%`;
+  progressBar.style.background = "#4caf50";
   if (e.target.files.length > 0) {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -51,7 +56,8 @@ function handleFileUpload(e) {
             buttonGenerate.style.display = "initial";
           } else {
             // manejar el error
-            dataResult.innerText = "No se pudo procesar el archivo";
+            progressBar.style.background = "red";
+            dataResult.innerText = "Column not found";
             buttonGenerate.style.display = "none";
           }
         }

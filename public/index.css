@@ -37,7 +37,7 @@ button{
   margin: 10px 0;
 }
 .buttonClean:hover{
-  background-color: rgb(160, 22, 22);
+  background-color: red;
   color: rgb(255, 255, 255);
 }
 .buttonGenerate{
