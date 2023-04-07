@@ -1,0 +1,26 @@
+{
+  "name": "crud-excel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -L"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yeiberey/crud-excel.git"
+  },
+  "author": "yeiberey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yeiberey/crud-excel/issues"
+  },
+  "homepage": "https://github.com/Yeiberey/crud-excel#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "xlsx": "^0.18.5"
+  }
+}

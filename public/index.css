@@ -1,0 +1,49 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: 0;
+  border: 0;
+}
+
+html,body{
+  height: 100%;
+}
+.index {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: #f5f6f7;
+  flex-direction: column;
+  height: 100%;
+}
+
+button{
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #000000;
+}
+
+
+#importFile{
+  margin: 10px 0;
+  background-color: rgb(27, 165, 27);
+  color: white;
+}
+#importFile:hover{
+  background-color: rgb(52, 122, 52);
+}
+/* .buttonClean{
+  background-color: rgb(34, 111, 226);
+  color: white;
+} */
+.buttonGenerate{
+  display: none;
+  background-color: rgb(34, 111, 226);
+  color: white;
+}
+
+.buttonGenerate:hover{
+  background-color: rgb(38, 87, 160);
+}
