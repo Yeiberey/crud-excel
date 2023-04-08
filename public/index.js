@@ -1,9 +1,10 @@
 const inputColumn = document.getElementById("inputColumn");
 const buttonImport = document.getElementById("importFile");
-buttonImport.disabled = true;
+// buttonImport.disabled = true;
 const buttonClean = document.querySelector(".buttonClean");
 const dataResult = document.getElementById("dataResult");
 const buttonGenerate = document.querySelector(".buttonGenerate");
+const labelProgress = document.getElementById("labelProgress");
 const progressBar = document.querySelector(".progress-bar");
 
 const worker = new Worker("./readExcel.js");
@@ -20,6 +21,7 @@ const clean = () => {
   buttonGenerate.style.display = "none";
   dataResult.innerText = "";
 
+  labelProgress.innerText = `0%`;
   progressBar.style.width = `0%`;
 };
 inputColumn.addEventListener("input", (e) => {
@@ -30,6 +32,7 @@ buttonImport.addEventListener("click", clean);
 
 buttonImport.addEventListener("change", handleFileUpload);
 function handleFileUpload(e) {
+  labelProgress.innerText = `0%`;
   progressBar.style.width = `0%`;
   progressBar.style.background = "#4caf50";
   if (e.target.files.length > 0) {
@@ -47,8 +50,10 @@ function handleFileUpload(e) {
       worker.onmessage = function (e) {
         if (e.data.progress !== undefined) {
           // Actualiza la barra de progreso si se ha enviado
+          labelProgress.innerText = `${Math.round(e.data.progress * 100)}%`;
           progressBar.style.width = `${Math.round(e.data.progress * 100)}%`;
-        } else if (e.data.result !== undefined) {
+        }
+        if (e.data.result !== undefined) {
           // Usa el resultado si se ha enviado
           if (e.data.result.length) {
             datos = [[nameColumn], ...e.data.result];

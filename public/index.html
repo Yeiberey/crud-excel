@@ -14,7 +14,7 @@
         <div >
 <div style="display: flex; flex-direction: column; align-items: start; width: 100%;">
     <label>Name column</label>
-    <input type="text" placeholder="Name column" value="" id="inputColumn">
+    <input type="text" placeholder="Name column" value="Nombre completo" id="inputColumn">
 </div>
 <div>
     <input type="file" id="importFile">
@@ -24,10 +24,11 @@
     
 </div>
 <div style="display: flex; flex-direction: column; align-items: start; width: 100%;">
-    <label style="text-align: start; margin: 10px 0; overflow-x: auto; max-height: 50vh; width: 100%;" id="dataResult"></label>
     <div class="progress-bar-container">
         <div class="progress-bar"></div>
-      </div>
+    </div>
+    <label style="text-align: end; margin: 10px 0; overflow-x: auto; width: 100%;" id="labelProgress">0%</label>
+    <label style="text-align: start; margin: 10px 0; overflow-x: auto; max-height: 50vh; width: 100%;" id="dataResult"></label>
     <button class="buttonGenerate">
         GENERATE FILE
     </button>
