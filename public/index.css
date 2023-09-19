@@ -17,6 +17,14 @@ html,body{
   flex-direction: column;
   height: 100%;
 }
+.container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: start;
+  background: #f5f6f7;
+  flex-direction: row;
+}
 
 button{
   padding: 8px;
@@ -42,7 +50,6 @@ button{
 }
 .buttonGenerate{
   width: 100%;
-  display: none;
   background-color: rgb(34, 111, 226);
   color: white;
 }
@@ -65,4 +72,20 @@ button{
   height: 100%;
   background-color: #4caf50;
   transition: width 0.3s ease-in-out;
+}
+.formDate{
+  width: inherit;
+}
+.divCategory button{
+  border-radius: 0px;
+}
+.buttonFloors{
+  background: #addaa7;
+  border: none;
+  border-bottom: 2px solid #218f13;
+}
+.buttonOthers{
+  border: none;
+  border-bottom: none;
+  background: none;
 }

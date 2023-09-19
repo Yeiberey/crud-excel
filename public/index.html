@@ -1,42 +1,131 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Crud excel</title>
     <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    <!-- use version 0.19.2 -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.19.2/package/dist/xlsx.full.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.core.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
 </head>
+
 <body>
     <div class="index">
-        <div >
-<div style="display: flex; flex-direction: column; align-items: start; width: 100%;">
-    <label>Name column</label>
-    <input type="text" placeholder="Name column" value="Nombre completo" id="inputColumn">
-</div>
-<div>
-    <input type="file" id="importFile">
-    <button class="buttonClean">
-        Clean
-    </button>
-    
-</div>
-<div style="display: flex; flex-direction: column; align-items: start; width: 100%;">
-    <div class="progress-bar-container">
-        <div class="progress-bar"></div>
-    </div>
-    <label style="text-align: end; margin: 10px 0; overflow-x: auto; width: 100%;" id="labelProgress">0%</label>
-    <label style="text-align: start; margin: 10px 0; overflow-x: auto; max-height: 50vh; width: 100%;" id="dataResult"></label>
-    <button class="buttonGenerate">
-        GENERATE FILE
-    </button>
-</div>
+        <div
+            style=" max-height: 90%; overflow-x: auto; min-width: 50%; border-radius: 8px; background: #eeeeee; padding: 15px; box-shadow: 5px 15px 15px 0px rgba(0, 0, 0, 0.4), 0 0 0px 1px rgba(0, 0, 0, 0.25);">
+            <div style="display: flex;  align-items: start; width: 100%;  background: rgba(255,255,255,0.5);"
+                class="divCategory">
+                <button class="buttonFloors" name="Floors">
+                    Floors
+                </button>
+                <button class="buttonOthers" name="Others">
+                    Others
+                </button>
+            </div>
+            <div class="container">
+                <div style="display: flex;  align-items: start; width:100%; ">
+
+                    <div
+                        style="display: flex; flex-direction: column; margin: 10px; width: inherit; padding-bottom: 10px; ">
+
+                        <label
+                            style="width: max-content; text-align: start;margin: 5px 0; font-size: 20px; font-weight: 600;"
+                            for="uploadTitle">Upload excel</label>
+                        <div style="display: flex; flex-direction: column;">
+                            <div
+                                style="display: flex; flex-direction: column; justify-content: start; padding: 5px; border-radius: 8px; background: #c9cbec;">
+                                <label style="width: max-content; text-align: start;" for="dateUpload">Date</label>
+                                <input type="date" value="2023-09-18" id="dateUpload"
+                                    style="margin: 10px 0; background: none;">
+                            </div>
+                            <div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+                            </div>
+                            <input type="file" id="importFile">
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+
+                            <button class="buttonClean">
+                                Clean
+                            </button>
+                            <button class="buttonUpload" style="background-color: darkgreen; color: white;">
+                                Upload
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; margin: 10px; align-items: start; width:100%;">
+                    <form class="formDate" style="padding-bottom: 10px;">
+                        <div style="display: flex; flex-direction: column; width: fit-content;">
+
+                            <label
+                                style="width: max-content; text-align: start;margin: 5px 0; font-size: 20px; font-weight: 600;"
+                                for="searchTitle">Search Data Base</label>
+                            <select id="option">
+                                <option value="date">Date</option>
+                                <option value="range">Range of dates</option>
+                            </select>
+                        </div>
+                        <div id="date-container"
+                            style="display: flex; flex-direction: column; justify-content: start; margin: 10px 0;">
+                            <div
+                                style="display: flex; flex-direction: column; justify-content: start; padding: 5px; border-radius: 8px; background: #c9cbec;">
+
+                                <label for="date" style="width: max-content; text-align: start;">Date</label>
+                                <input type="date" id="date" value="2023-09-18"
+                                    style="margin: 10px 0; background: none;">
+                            </div>
+                            <div style="display: flex; flex-direction: row; margin-top: 10px;">
+
+                                <input type="checkbox" name="allMonth" class="checkAllMonth" value="opcion1">
+                                <label for="checkAllMonth"
+                                    style="width: max-content; text-align: start; margin-left: 10px;">The whole
+                                    month</label>
+                            </div>
+                        </div>
+                        <div id="range-container"
+                            style="display: none; flex-direction: column; justify-content: start; margin: 10px 0;">
+                            <div
+                                style="display: flex; flex-direction: column; justify-content: start; padding: 5px; border-radius: 8px; background: #d8b0b0;">
+                                <label for="date-start" style="width: max-content; text-align: start;">Start</label>
+                                <input type="date" id="date-start" style="margin: 10px 0; background: none;">
+                            </div>
+                            <div
+                                style="display: flex; flex-direction: column; justify-content: start; margin-top: 10px; padding: 5px; border-radius: 8px; background: #a5e9a3;">
+                                <label for="date-end" style="width: max-content; text-align: start;">End</label>
+                                <input type="date" id="date-end" style="margin: 10px 0; background: none;">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="searchDB">Search</button>
+                    </form>
+                    <label style="text-align: start; margin: 10px 0; overflow-x: auto; max-height: 15vh; width: 100%;"
+                        id="dataResult"></label>
+
+                    <button class="buttonGenerate">
+                        GENERATE FILE
+                    </button>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <label style="text-align: end; margin: 10px 0; width: 100%;" id="labelProgress">0%</label>
+            </div>
+            <canvas id="myChart" style="display: flex; width: 50em;"></canvas>
         </div>
     </div>
-    
-    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <script src='index.js'></script>
 </body>
+
 </html>
